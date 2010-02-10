@@ -7,9 +7,10 @@ class PdfRenderer::LatexTest < Test::Unit::TestCase
     assert result =~ /%PDF-\d\.\d/
   end
   
-  def test_should_raise_invalid_char_exception_if_unicode_character_in_document
+  def test_should_raise_exception_if_there_are_latex_errors
     latex = PdfRenderer::Latex.new
-    result = latex.generate_pdf('\documentclass[a4paper]{report} \title{Hello World in LaTeX } \begin{document} ööööö \end{document}')
-    assert result =~ /%PDF-\d\.\d/
+    assert_raise PdfRenderer::LatexError do
+      latex.generate_pdf('\documentclass[a4paper]{report} \title{Hello World in LaTeX } \begin{document}')
+    end
   end
 end

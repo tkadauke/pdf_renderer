@@ -4,6 +4,8 @@ module PdfRenderer
     
     adv_attr_accessor :body, :template_name, :preprocess, :debug
     
+    attr_reader :tex_out
+    
     class_inheritable_array :view_paths
     
     def initialize
@@ -13,12 +15,17 @@ module PdfRenderer
     
     def self.method_missing(method, *params)
       if method.to_s =~ /^render_(.*)$/
-        renderer_instance = new
-        renderer_instance.template_name = $1
-        renderer_instance.send(renderer_instance.template_name, *params)
-        renderer_instance.render :file => renderer_instance.template_path
+        pdf = send($1, *params)
+        pdf.render!
+      elsif method.to_s =~ /^save_(.*)$/
+        file_name = params.shift
+        pdf = send($1, *params)
+        pdf.save(file_name)
       else
-        super
+        renderer_instance = new
+        renderer_instance.template_name = method
+        renderer_instance.send(renderer_instance.template_name, *params)
+        Pdf.new(renderer_instance)
       end
     end
     
@@ -35,10 +42,12 @@ module PdfRenderer
     end
     
     def render(options)
-      tex_out = template_instance.render options
-      Latex.new(
-        :preprocess => preprocess, :debug => debug
-      ).generate_pdf(tex_out)
+      @tex_out = template_instance.render options
+      Latex.new(:preprocess => preprocess, :debug => debug).generate_pdf(tex_out)
+    end
+    
+    def render!
+      render :file => template_path
     end
   
   protected

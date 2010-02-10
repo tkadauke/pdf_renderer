@@ -23,6 +23,11 @@ class PdfRenderer::BaseTest < Test::Unit::TestCase
     TestRenderer.render_something_with_params('hello')
   end
   
+  def test_should_save_pdf
+    File.expects('open').with('/some/filename', 'wb')
+    TestRenderer.save_something('/some/filename')
+  end
+  
   def test_should_build_correct_template_dir
     assert_equal "pdf_renderer/base_test/test_renderer", TestRenderer.new.template_dir
   end

@@ -1,5 +1,6 @@
 module PdfRenderer
   class LatexProcessorNotFound < StandardError; end
+  class LatexError < StandardError; end
   class InvalidCharacter < StandardError; end
 
   class Latex
@@ -35,10 +36,8 @@ module PdfRenderer
     end
     
     def create_debug_output(output)
-      begin
-        File.open("pdf_renderer_out.tex", "wb") {|f| f.puts output}
-      rescue
-      end
+      File.open("pdf_renderer_out.tex", "wb") {|f| f.puts output}
+    rescue
     end
     
     def check_for_tex_presence!
@@ -74,7 +73,7 @@ module PdfRenderer
           if tex_return[/(Package inputenc Error: Unicode char .+)/,1]
             raise InvalidCharacter.new($1)
           end
-          raise "Could not generate PDF:\n>>#{tex_return}<<\n\nPath:#{texfile.path}\n\n\nInput:#{input}"
+          raise LatexError.new("Could not generate PDF:\n>>#{tex_return}<<\n\nPath:#{texfile.path}\n\n\nInput:#{input}")
         end
       end
     end
