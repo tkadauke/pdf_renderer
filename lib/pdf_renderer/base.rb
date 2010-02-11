@@ -1,13 +1,13 @@
 module PdfRenderer
   class Base
     include ActionMailer::AdvAttrAccessor
+    include PdfRenderer::Helpers
     
     adv_attr_accessor :body, :template_name, :preprocess, :debug
     
     attr_reader :tex_out
     
     class_inheritable_array :view_paths
-    class_inheritable_array :helpers
     
     def initialize
       preprocess false
@@ -51,29 +51,12 @@ module PdfRenderer
       render :file => template_path
     end
     
-    def self.helper(*helpers)
-      write_inheritable_array :helpers, helpers
-    end
-  
   protected
     def self.template_class
       @template_class ||= returning Class.new(ActionView::Base) do |view_class|
         view_class.send(:include, ApplicationController.master_helper_module) if Object.const_defined?(:ApplicationController)
         view_class.send(:include, PdfRenderer::Helpers::LatexHelper)
         view_class.send(:include, self.master_helper_module)
-      end
-    end
-    
-    def self.master_helper_module
-      @master_helper_module ||= returning(Module.new) do |mod|
-        (helpers || []).each do |helper|
-          case helper
-          when Module
-            mod.send(:include, helper)
-          when String, Symbol
-            mod.send(:include, "#{helper.to_s}_helper".camelize.constantize)
-          end
-        end
       end
     end
     
