@@ -1,5 +1,20 @@
 require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
+module FirstTestHelper
+  def first
+  end
+end
+
+module SecondTestHelper
+  def second
+  end
+end
+
+module ThirdTestHelper
+  def third
+  end
+end
+
 class PdfRenderer::BaseTest < Test::Unit::TestCase
   class TestRenderer < PdfRenderer::Base
     def something
@@ -11,8 +26,16 @@ class PdfRenderer::BaseTest < Test::Unit::TestCase
     end
   end
   
+  class RendererWithHelper < PdfRenderer::Base
+    helper :first_test, 'second_test', ThirdTestHelper
+    
+    def something
+    end
+  end
+  
   def setup
     TestRenderer.view_paths = [File.dirname(__FILE__) + '/../fixtures']
+    RendererWithHelper.view_paths = [File.dirname(__FILE__) + '/../fixtures']
   end
 
   def test_should_render_pdf
@@ -27,5 +50,11 @@ class PdfRenderer::BaseTest < Test::Unit::TestCase
     pdf = TestRenderer.something_with_params('test string')
     pdf.render!
     assert pdf.source =~ /test string/
+  end
+  
+  def test_should_include_helper_modules
+    assert_nothing_raised do
+      assert RendererWithHelper.render_something =~ /^%PDF-\d\.\d/
+    end
   end
 end
