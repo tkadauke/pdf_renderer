@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.email     =   "entwicker@imedo.de"
   s.homepage  =   "http://www.imedo.de/"
   s.summary   =   "Framework for rendering PDFs using LaTeX"
-  s.files     =   Dir.glob("lib/**/*")
+  s.files     =   Dir.glob("lib/**/*") + Dir.glob("rails_generators/**/*")
 
   s.has_rdoc = true
   
