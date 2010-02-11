@@ -1,4 +1,6 @@
 module PdfRenderer
+  # Contains functionality for using helper modules in the views when rendering
+  # LaTeX ERB files.
   module Helpers
     def self.included(base)
       base.class_inheritable_array :helpers
@@ -6,6 +8,9 @@ module PdfRenderer
     end
     
     module ClassMethods
+      # Class-level method that declares <code>helpers</code> as helpers for
+      # inclusion in the view. Specify the helpers as <code>:symbol</code>,
+      # <code>'string'</code>, or <code>ConstantName</code>.
       def helper(*helpers)
         write_inheritable_array :helpers, helpers
       end

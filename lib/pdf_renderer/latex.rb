@@ -1,8 +1,12 @@
 module PdfRenderer
+  # This error is raised when no suitable LaTeX executable is found.
   class LatexProcessorNotFound < StandardError; end
+  # This error is raised when there is a syntax error in the LaTeX input.
   class LatexError < StandardError; end
+  # This error is raised when there is an illegal character in the LaTeX input.
   class InvalidCharacter < StandardError; end
 
+  # This class wraps the LaTeX command invocation.
   class Latex
     attr_reader :options
     
@@ -20,6 +24,8 @@ module PdfRenderer
       @options = options
     end
     
+    # Returns the rendered PDF as string for the given input string (LaTeX
+    # source).
     def generate_pdf(input)
       create_debug_output(input) if options[:debug]
       check_for_tex_presence!

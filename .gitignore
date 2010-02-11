@@ -1,3 +1,4 @@
 pkg/*
 coverage/*
 coverage.data
+rdoc/*

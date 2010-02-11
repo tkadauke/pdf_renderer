@@ -1,0 +1,35 @@
+=== PdfRenderer
+
+This gem provides a framework for rendering PDFs. The API is very similar to ActionMailer.
+
+Author::    Thomas Kadauke  - tkadauke (at) imedo.de
+Copyright:: Copyright (c) 2010 imedo GmbH
+Licence::   MIT
+Git::       http://github.com/imedo/pdf_renderer
+Bugs::      No dedicated bug tracker yet - Email us or just send pull requests 
+
+== Dependencies
+
+* Rails >= 2.3.0
+* pdflatex in your PATH
+
+== Installation
+
+ $ git clone git://github.com/imedo/pdf_renderer.git
+ $ cd pdf_renderer
+ $ rake install
+
+== Usage
+
+To use PdfRenderer, subclass PdfRenderer::Base like this:
+
+  class BillRenderer < PdfRenderer::Base
+    helper :pdf, :bill
+    
+    def bill(model)
+      body :bill => model
+    end
+  end
+
+Then put your LaTeX code with ERB tags in <code>app/views/bill_renderer/bill.pdf.erb</code>.
+  

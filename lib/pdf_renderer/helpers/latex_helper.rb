@@ -1,11 +1,14 @@
 module PdfRenderer
   module Helpers
+    # Contains methods for escaping strings for LaTeX.
     module LatexHelper
       BS        = "\\\\"
       BACKSLASH = "#{BS}textbackslash{}"
       HAT       = "#{BS}textasciicircum{}"
       TILDE     = "#{BS}textasciitilde{}"
 
+      # Escapes the string, so it is suitable for LaTeX input. This method is
+      # aliased as <code>l</code>.
       def latex_escape(s)
         quote_count = 0
         s.to_s.
