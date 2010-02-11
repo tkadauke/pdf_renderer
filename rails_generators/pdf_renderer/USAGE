@@ -1,0 +1,15 @@
+Description:
+    Stubs out a new PDF renderer and its views. Pass the renderer name, either
+    CamelCased or under_scored, without PdfRenderer or _pdf_renderer as the suffix,
+    and an optional list of actions as arguments.
+
+    This generates a renderer class in app/pdf_renderers, view templates in
+    app/views/renderer_name, and a functional test in test/functional.
+
+Example:
+    `./script/generate pdf_renderer Bill bill invoice reminder`
+
+    creates a bill renderer class, views, and test:
+        Renderer:  app/pdf_renderers/bill_pdf_renderer.rb
+        Views:     app/views/bill_pdf_renderer/bill.pdf.erb [...]
+        Test:      test/functional/bill_pdf_renderer_test.rb
