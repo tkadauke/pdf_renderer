@@ -54,6 +54,7 @@ module PdfRenderer
     def self.template_class
       @template_class ||= returning Class.new(ActionView::Base) do |view_class|
         view_class.send(:include, ApplicationController.master_helper_module) if Object.const_defined?(:ApplicationController)
+        view_class.send(:include, PdfRenderer::Helpers::LatexHelper)
       end
     end
     
