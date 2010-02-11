@@ -6,9 +6,9 @@ module PdfRenderer
   class Latex
     attr_reader :options
     
-    # Option redirection for shell output (set to  '> /dev/null 2>&1' )
+    # Option redirection for shell output (default is '> /dev/null 2>&1' )
     cattr_accessor :shell_redirect
-    self.shell_redirect = nil
+    self.shell_redirect = '> /dev/null 2>&1'
     # Temporary Directory
     cattr_accessor :tempdir
     self.tempdir = "#{File.expand_path(RAILS_ROOT)}/tmp"
