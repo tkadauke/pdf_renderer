@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
 
 class PdfRenderer::PdfTest < Test::Unit::TestCase
   def setup
-    @renderer = stub(:render! => 'output', :tex_out => 'source')
+    @renderer = stub(:render! => 'output', :tex_out => 'source', :body => { :a => 'b' })
   end
   
   def test_should_render_pdf

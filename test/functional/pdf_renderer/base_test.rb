@@ -12,7 +12,12 @@ class PdfRenderer::BaseTest < Test::Unit::TestCase
   end
   
   def setup
+    FileUtils.mkdir_p File.dirname(__FILE__) + '/../../tmp/'
     TestRenderer.view_paths = [File.dirname(__FILE__) + '/../fixtures']
+  end
+  
+  def teardown
+    FileUtils.rm_f File.dirname(__FILE__) + '/../../tmp/test.pdf'
   end
 
   def test_should_render_pdf
@@ -27,5 +32,10 @@ class PdfRenderer::BaseTest < Test::Unit::TestCase
     pdf = TestRenderer.something_with_params('test string')
     pdf.render!
     assert pdf.source =~ /test string/
+  end
+  
+  def test_should_save_pdf_to_filesystem
+    TestRenderer.save_something_with_params(File.dirname(__FILE__) + '/../../tmp/test.pdf', 'test string')
+    assert File.exists?(File.dirname(__FILE__) + '/../../tmp/test.pdf')
   end
 end

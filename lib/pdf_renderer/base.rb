@@ -81,11 +81,13 @@ module PdfRenderer
         file_name = params.shift
         pdf = send($1, *params)
         pdf.save(file_name)
-      else
+      elsif instance_methods.include?(method.to_s)
         renderer_instance = new
         renderer_instance.template_name = method
         renderer_instance.send(renderer_instance.template_name, *params)
         Pdf.new(renderer_instance)
+      else
+        super
       end
     end
     

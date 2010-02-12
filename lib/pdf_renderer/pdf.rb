@@ -3,6 +3,8 @@ module PdfRenderer
   # class is returned by a PdfRenderer, when an action is called without a
   # prefix (i.e. without <code>render_</code> or <code>save_</code>).
   class Pdf
+    # Contains the instance variable assigns
+    attr_accessor :body
     # Contains the LaTeX source for this PDF.
     attr_accessor :source
     # Contains the rendered PDF as string.
@@ -10,6 +12,7 @@ module PdfRenderer
     
     def initialize(renderer)
       @renderer = renderer
+      @body = renderer.body
     end
     
     # Renders the PDF.
