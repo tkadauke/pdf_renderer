@@ -1,6 +1,8 @@
 require 'gemmer'
 
-gemmer 'pdf_renderer'
+Gemmer::Tasks.new('pdf_renderer') do |t|
+  t.release_via :rubygems
+end
 
 require 'rake'
 require 'rake/testtask'
