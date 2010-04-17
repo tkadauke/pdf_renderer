@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.name      =   "pdf_renderer"
   s.version   =   "0.0.1"
   s.date      =   Date.today.strftime('%Y-%m-%d')
-  s.author    =   "imedo GmbH"
+  s.author    =   "Thomas Kadauke"
   s.email     =   "entwicker@imedo.de"
   s.homepage  =   "http://www.imedo.de/"
   s.summary   =   "Framework for rendering PDFs using LaTeX"
