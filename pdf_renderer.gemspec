@@ -1,7 +1,7 @@
 Gem::Specification.new do |s| 
   s.platform  =   Gem::Platform::RUBY
   s.name      =   "pdf_renderer"
-  s.version   =   "0.0.1"
+  s.version   =   "0.0.2"
   s.date      =   Date.today.strftime('%Y-%m-%d')
   s.author    =   "Thomas Kadauke"
   s.email     =   "entwicker@imedo.de"
